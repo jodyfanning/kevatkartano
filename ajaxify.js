@@ -50,8 +50,16 @@ var KEVATKARTANO = (function (parent, window, undefined) {
 	};
 
 	my.appendArticle = function (article) {
-		$('#article_section .next').first().attr('href', article.next);
-		$('#article_section .previous').first().attr('href', article.previous);
+		if(article.next) {
+			$('#article_section .next').first().attr('href', article.next).show();
+		} else {
+			$('#article_section .next').first().attr('href', "").hide();
+		}
+		if(article.previous) {
+			$('#article_section .previous').first().attr('href', article.previous).show();
+		} else {
+			$('#article_section .previous').first().attr('href', "").hide();
+		}
 		$('#article_section article').html(article.body);
 		return article;
 	};
@@ -113,9 +121,6 @@ var KEVATKARTANO = (function (parent, window, undefined) {
 				.done();
 		}
 
-		$('#article_section').each(function() {
-			parent.effects.imgRandomRotate(this);
-		});
 	});
 
 	return parent;

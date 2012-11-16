@@ -18,6 +18,12 @@ var KEVATKARTANO = (function (parent, window, undefined) {
 		return article;
 	};
 
+	$(function() {
+		$('#article_section').each(function() {
+			my.imgRandomRotate(this);
+		});
+	});
+
 	return parent;
 
 }(KEVATKARTANO || {}, window));
