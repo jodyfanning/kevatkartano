@@ -7,7 +7,7 @@ var KEVATKARTANO = (function (parent, window, undefined) {
 
 	my.imgRandomRotate = function(article) {
 		var styles = ['-moz-transform', '-webkit-transform', '-ms-transform', '-o-transform', 'transform'];
-		$(article).find('img').each( function() {
+		$(article.body).find('img').each( function() {
 			var rNum = (Math.random()*12)-6;
 			var cssRotate = 'rotate('+rNum+'deg)';
 			for (var x in styles) {
@@ -20,7 +20,7 @@ var KEVATKARTANO = (function (parent, window, undefined) {
 
 	$(function() {
 		$('#article_section').each(function() {
-			my.imgRandomRotate(this);
+			my.imgRandomRotate({body: this});
 		});
 	});
 
