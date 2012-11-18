@@ -61,6 +61,7 @@ var KEVATKARTANO = (function (parent, window, undefined) {
 			$('#article_section .previous').first().attr('href', "").hide();
 		}
 		$('#article_section article').html(article.body);
+		article.body = $('#article_section article');
 		return article;
 	};
 
