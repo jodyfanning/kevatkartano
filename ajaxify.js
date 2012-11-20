@@ -1,4 +1,4 @@
-/*jshint browser: true, devel: true, eqeqeq: true, jquery: true */
+﻿/*jshint browser: true, devel: true, eqeqeq: true, jquery: true */
 /*global Q: true */
 
 /*
@@ -62,6 +62,7 @@ var KEVATKARTANO = (function (parent, window, undefined) {
 		}
 		$('#article_section article').html(article.body);
 		article.body = $('#article_section article');
+		window.document.title = 'Kevätkartano - ' + $('#article_section article header h1').text();
 		return article;
 	};
 
