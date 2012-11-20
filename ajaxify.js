@@ -108,20 +108,13 @@ var KEVATKARTANO = (function (parent, window, undefined) {
 			return false;
 		});
 
-		if (location.hash) {
-			my.getArticleAsync(location.hash.slice('#/'.length))
-				.then(my.findArticle)
-				.then(my.replaceHistory)
-				.then(my.appendArticle)
-				.then(parent.effects.imgRandomRotate)
-				.fail(my.logError)
-				.done();
-		} else {
-			Q.when(my.replaceHistory({body: $('body').find('article').first().html(), title: document.title, url: document.location.href}))
-				.fail(my.logError)
-				.done();
-		}
-
+		Q.when(my.replaceHistory({
+		    body: $('#article_section article').first().html(),
+		    next: $('#article_section nav .next').first().attr('href'),
+		    previous: $('#article_section nav .previous').first().attr('href'),
+		    title: document.title,
+		    url: (history.location || document.location).href
+		})).fail(my.logError).done();
 	});
 
 	return parent;
