@@ -1,10 +1,16 @@
 ﻿/*jshint browser: true, devel: true, eqeqeq: true, jquery: true */
 /*global Q: true */
 
-/*
-	Depends on history.js, https://github.com/devote/HTML5-History-API
-*/
 var KEVATKARTANO = (function (parent, window, undefined) {
+
+	function supports_history_api() {
+		return !!(window.history && window.history.pushState);
+	}
+
+	//Don't register anything if history isn't supported
+	if (!supports_history_api()) {
+		return parent;
+	}
 
 	var my = parent.ajaxify = parent.ajaxify || {},
 		history = window.history,
