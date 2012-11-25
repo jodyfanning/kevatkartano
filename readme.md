@@ -6,7 +6,6 @@ A set of modules used in [http://www.kevatkartano.com/](http://www.kevatkartano.
 These modules depend on the following
 * [jQuery](http://jquery.com)
 * [Q](https://github.com/kriskowal/q) -- Promise support
-* [HTML5-History-API](https://github.com/devote/HTML5-History-API) -- implementing HTML5 history in older browsers.
 	
 Modules
 -------
