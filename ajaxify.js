@@ -2,6 +2,7 @@
 /*global Q: true */
 
 var KEVATKARTANO = (function (parent, window, undefined) {
+	'use strict';
 
 	function supports_history_api() {
 		return !!(window.history && window.history.pushState);
@@ -22,9 +23,9 @@ var KEVATKARTANO = (function (parent, window, undefined) {
 		$.ajax({
 			'url': url,
 			'dataType': 'html'
-		}).success(function(response) {
+		}).success(function (response) {
 			deferred.resolve({'url': url, 'response': response});
-		}).fail(function(xhr) {
+		}).fail(function (xhr) {
 			deferred.reject(new Error('Couldn\'t load article ' + url + ', reason: ' + xhr.statusText));
 		});
 
@@ -32,14 +33,14 @@ var KEVATKARTANO = (function (parent, window, undefined) {
 	};
 
 	my.findArticle = function (data) {
-		var article ={},
-			response = data.response, 
+		var article = {},
+			response = data.response,
 			message,
 			title = $(response).find('title').first().text(),
 			body = $(response).find('article').first().html(),
 			section = $(response).find('#article_section').first(),
 			header = $(response).find('#content_header h1').first();
-		if(body.length > 0) {
+		if (body.length > 0) {
 			article.url = data.url;
 			article.title = title;
 			article.body = body;
@@ -47,7 +48,7 @@ var KEVATKARTANO = (function (parent, window, undefined) {
 			article.previous = $(section).find('.previous').first().attr('href');
 		} else {
 			header = $(response).find('h1').first();
-			if(header.length > 0) {
+			if (header.length > 0) {
 				message = ' in ' + header.text();
 			}
 			throw new Error('Couldn\'t parse article, no content found' + message);
@@ -56,12 +57,12 @@ var KEVATKARTANO = (function (parent, window, undefined) {
 	};
 
 	my.appendArticle = function (article) {
-		if(article.next) {
+		if (article.next) {
 			$('#article_section .next').first().attr('href', article.next).show();
 		} else {
 			$('#article_section .next').first().attr('href', "").hide();
 		}
-		if(article.previous) {
+		if (article.previous) {
 			$('#article_section .previous').first().attr('href', article.previous).show();
 		} else {
 			$('#article_section .previous').first().attr('href', "").hide();
@@ -92,10 +93,10 @@ var KEVATKARTANO = (function (parent, window, undefined) {
 		return error;
 	};
 
-	$(function() {
-		$( window ).bind( 'popstate', function( event ) {
+	$(function () {
+		$(window).bind('popstate', function (event) {
 			event = event || window.event;
-			if(event.originalEvent.state) {
+			if (event.originalEvent.state) {
 				Q.when(my.appendArticle(event.originalEvent.state))
 					.then(parent.effects.imgRandomRotate)
 					.fail(my.logError)
@@ -103,7 +104,7 @@ var KEVATKARTANO = (function (parent, window, undefined) {
 			}
 		});
 
-		$('#article_section nav a').click( function(e) {
+		$('#article_section nav a').click(function (e) {
 			my.getArticleAsync($(this).attr('href'))
 				.then(my.findArticle)
 				.then(my.pushHistory)
@@ -116,11 +117,11 @@ var KEVATKARTANO = (function (parent, window, undefined) {
 		});
 
 		Q.when(my.replaceHistory({
-		    body: $('#article_section article').first().html(),
-		    next: $('#article_section nav .next').first().attr('href'),
-		    previous: $('#article_section nav .previous').first().attr('href'),
-		    title: document.title,
-		    url: (history.location || document.location).href
+			body: $('#article_section article').first().html(),
+			next: $('#article_section nav .next').first().attr('href'),
+			previous: $('#article_section nav .previous').first().attr('href'),
+			title: document.title,
+			url: (history.location || document.location).href
 		})).fail(my.logError).done();
 	});
 
