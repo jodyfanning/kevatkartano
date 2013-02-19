@@ -161,3 +161,16 @@ pip-log.txt
 
 # Mac crap
 .DS_Store
+
+############
+## Node
+############
+node_modules
+npm-debug.log
+CHANGES.html
+README.html
+.tmp
+
+.coverage_data/
+.coverage_debug/
+cover_html/
