@@ -13,4 +13,3 @@ These are currently:
 * effects -- reusable visual effects 
 * ajaxify -- allows fetching next/previous articles via AJAX and updates browser history as needed.
 
-The modules are based on the [sub-module pattern](http://www.adequatelygood.com/2010/3/JavaScript-Module-Pattern-In-Depth).
