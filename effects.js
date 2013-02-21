@@ -1,14 +1,24 @@
 /*jshint browser: true, devel: true, eqeqeq: true, plusplus: false, jquery: true */
-
-var KEVATKARTANO = (function (parent, window, undefined) {
+(function (definition) {
+    // CommonJS
+    if (typeof exports === "object") {
+        module.exports = definition(global);
+    // <script>
+    } else {
+    	if(typeof KEVATKARTANO === 'undefined') {
+    		KEVATKARTANO = {};	
+    	}
+        KEVATKARTANO.effects = definition(window);
+    }
+})(function (global, undefined) {
 	'use strict';
 
-	var my = parent.effects = parent.effects || {},
-		$ = window.jQuery;
-
-	my.imgRandomRotate = function (article) {
+	var my = {},
+		$ = global.jQuery;
+	
+	my.imgRandomRotate = function (container) {
 		var styles = ['-moz-transform', '-webkit-transform', '-ms-transform', '-o-transform', 'transform'];
-		$(article.body).find('img').each(function () {
+		container.find('img').each(function () {
 			var rNum = (Math.random() * 12) - 6,
 				cssRotate = 'rotate(' + rNum + 'deg)',
 				x;
@@ -17,15 +27,18 @@ var KEVATKARTANO = (function (parent, window, undefined) {
 			}
 		});
 
-		return article;
+		return container;
 	};
 
-	$(function () {
-		$('#article_section').each(function () {
-			my.imgRandomRotate({body: this});
+	my.onReady = function () {
+		$('#article_section article').each(function () {
+			my.imgRandomRotate($(this));
 		});
+	}
+
+	$(function () {
+		my.onReady();
 	});
 
-	return parent;
-
-}(KEVATKARTANO || {}, window));
+	return my;
+});
