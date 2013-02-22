@@ -1,21 +1,30 @@
 ﻿/*jshint browser: true, devel: true, eqeqeq: true, jquery: true */
 /*global Q: true */
 
-var KEVATKARTANO = (function (parent, window, undefined) {
+(function (definition) {
+    // CommonJS
+    if (typeof exports === "object") {
+        module.exports = definition(global);
+    // <script>
+    } else {
+    	if(typeof KEVATKARTANO === 'undefined') {
+    		KEVATKARTANO = {};	
+    	}
+        KEVATKARTANO.ajaxify = definition(window);
+    }
+})(function (global, undefined) {
 	'use strict';
 
-	function supports_history_api() {
-		return !!(window.history && window.history.pushState);
-	}
+	var my = {},
+		history = global.history,
+		$ = global.jQuery,
+		Q = global.Q,
+		window = global,
+		document = global.document;
 
-	//Don't register anything if history isn't supported
-	if (!supports_history_api()) {
-		return parent;
+	my.supportsHistory = function () {
+		return !!(history && history.pushState);
 	}
-
-	var my = parent.ajaxify = parent.ajaxify || {},
-		history = window.history,
-		$ = window.jQuery;
 
 	my.getArticleAsync = function (url) {
 		var deferred = Q.defer();
@@ -93,7 +102,7 @@ var KEVATKARTANO = (function (parent, window, undefined) {
 		return error;
 	};
 
-	$(function () {
+	my.onReady = function() {
 		$(window).bind('popstate', function (event) {
 			event = event || window.event;
 			if (event.originalEvent.state) {
@@ -123,8 +132,16 @@ var KEVATKARTANO = (function (parent, window, undefined) {
 			title: document.title,
 			url: (history.location || document.location).href
 		})).fail(my.logError).done();
+	}
+
+	$(function () {
+		//Don't register anything if history isn't supported
+		if (!my.supportsHistory()) {
+			return;
+		}
+
+		my.onReady();
 	});
 
-	return parent;
-
-}(KEVATKARTANO || {}, window));
+	return my;
+});

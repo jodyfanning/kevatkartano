@@ -21,12 +21,15 @@
 		container.find('img').each(function () {
 			var rNum = (Math.random() * 12) - 6,
 				cssRotate = 'rotate(' + rNum + 'deg)',
-				x;
+				x,
+				css = '{';
 			for (x = 0; x < styles.length; (x++)) {
-				$(this).css(styles[x], cssRotate);
+				css = css + styles[x] + ' : ' + cssRotate + '; ';
 			}
+			css = css + '}';
+			//Apply single style update
+			$(this).css(css);
 		});
-
 		return container;
 	};
 
