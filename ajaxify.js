@@ -1,15 +1,16 @@
-﻿/*jshint browser: true, devel: true, eqeqeq: true, jquery: true */
-/*global Q: true */
+/*jshint browser: true, devel: true, eqeqeq: true, jquery: true */
+/*global Q: true, KEVATKARTANO: true, exports: true, global: true, module: true */
 
 (function (definition) {
+	'use strict';
     // CommonJS
     if (typeof exports === "object") {
         module.exports = definition(global);
     // <script>
     } else {
-    	if(typeof KEVATKARTANO === 'undefined') {
-    		KEVATKARTANO = {};	
-    	}
+		if (typeof KEVATKARTANO === 'undefined') {
+			KEVATKARTANO = {};
+		}
         KEVATKARTANO.ajaxify = definition(window);
     }
 })(function (global, undefined) {
@@ -24,7 +25,7 @@
 
 	my.supportsHistory = function () {
 		return !!(history && history.pushState);
-	}
+	};
 
 	my.getArticleAsync = function (url) {
 		var deferred = Q.defer();
@@ -102,7 +103,7 @@
 		return error;
 	};
 
-	my.onReady = function() {
+	my.onReady = function () {
 		$(window).bind('popstate', function (event) {
 			event = event || window.event;
 			if (event.originalEvent.state) {
@@ -132,7 +133,7 @@
 			title: document.title,
 			url: (history.location || document.location).href
 		})).fail(my.logError).done();
-	}
+	};
 
 	$(function () {
 		//Don't register anything if history isn't supported
